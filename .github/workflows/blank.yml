@@ -1,0 +1,31 @@
+name: Run PowerShell on Linux
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  run-powershell:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Install PowerShell on the Ubuntu runner
+    - name: Install PowerShell
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget apt-transport-https software-properties-common
+        wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb
+        sudo dpkg -i packages-microsoft-prod.deb
+        sudo apt-get update
+        sudo apt-get install -y powershell
+        pwsh --version
+
+    # Run your PowerShell script
+    - name: Execute PowerShell Script
+      run: pwsh ./script.ps1
