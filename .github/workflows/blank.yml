@@ -28,4 +28,4 @@ jobs:
 
     # Run your PowerShell script
     - name: Execute PowerShell Script
-      run: pwsh ./script.ps1
+      run: pwsh /script.ps1
